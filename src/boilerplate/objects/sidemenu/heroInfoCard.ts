@@ -8,8 +8,8 @@ export class HeroInfoCard {
         let rt = scene.add.renderTexture(x, y, hero.width, hero.height);
         rt.setScale(hero.scale * 2);
         rt.draw(hero.texture.key);
-        // this.setTexture('heroInfoCard');
-        // this.setScale(0.3);        
-        // scene.add.existing(this);
+
+        let hpText = scene.add.text(x, y + rt.y + rt.height * rt.scale + 10, `HP: ${hero.hp}`, {color: "#000000"});
+        let dmgText = scene.add.text(x, y + hpText.y + hpText.height + 3, `Damage: ${hero.damage}`,  {color: "#000000"} );
     }
 }

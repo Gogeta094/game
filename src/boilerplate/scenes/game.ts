@@ -20,7 +20,7 @@ export class GameScene extends Phaser.Scene
         let map = Map.GenerateTestMap(this);      
         var player = new Player(this);       
 
-        var hero = new Hero(this, map.Checkpoints[0]);
+        var hero = new Hero(this, map.Checkpoints[0], 100, 10);
         player.addHero(hero);
 
         map.Checkpoints.forEach(element => {

@@ -19,10 +19,12 @@ export class Hero extends Phaser.GameObjects.Sprite {
         return this._damage;
     }
 
-    constructor (scene : GameScene, startingCheckpoint: Checkpoint)
+    constructor (scene : GameScene, startingCheckpoint: Checkpoint, hp: number, dmg: number)
     {
         super(scene, startingCheckpoint.x, startingCheckpoint.y, null, null);
         this._scene = scene;
+        this._hp = hp;
+        this._damage = dmg;
 
         this.currentCheckpoint = startingCheckpoint;
 
