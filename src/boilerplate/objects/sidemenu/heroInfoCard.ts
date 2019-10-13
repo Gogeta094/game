@@ -10,6 +10,6 @@ export class HeroInfoCard {
         rt.draw(hero.texture.key);
 
         let hpText = scene.add.text(x, y + rt.y + rt.height * rt.scale + 10, `HP: ${hero.hp}`, {color: "#000000"});
-        let dmgText = scene.add.text(x, y + hpText.y + hpText.height + 3, `Damage: ${hero.damage}`,  {color: "#000000"} );
+        let dmgText = scene.add.text(x, y + hpText.y + hpText.height, `Damage: ${hero.damage}`,  {color: "#000000"} );
     }
 }

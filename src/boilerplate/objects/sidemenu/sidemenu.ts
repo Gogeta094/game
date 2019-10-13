@@ -15,6 +15,6 @@ export class SideMenu {
     }
     
     displaySelectedHeroCard(selectedHero: Hero): void {
-        let infoCard = new HeroInfoCard(this.scene, selectedHero, this.x , this.y);        
+        let infoCard = new HeroInfoCard(this.scene, selectedHero, 25 , this.y + 10);        
     }
 }
