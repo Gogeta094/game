@@ -1,17 +1,19 @@
 import { GameScene } from "../scenes/game";
 
 import { Checkpoint } from "./checkpoint";
+import { Creature } from "./creature";
 
-export class Monster extends Phaser.GameObjects.Sprite {
-    constructor (scene : GameScene, checkpoint: Checkpoint)
+export class Monster extends Creature {  
+
+    constructor (scene : GameScene, checkpoint: Checkpoint, hp: number, dmg: number)
     {
-        super(scene, checkpoint.x, checkpoint.y, null, null);
-        // this.currentCheckpoint = checkpoint;
+        super(scene, checkpoint, hp, dmg);       
 
-        this.setTexture('hero');
-        this.setScale(0.1);
+        this.setTexture('monster');
+        
         this.setPosition(checkpoint.x, checkpoint.y);       
+        this.setScale(0.3);
 
-        scene.add.existing(this);
+        scene.add.existing(this);        
     }
 }

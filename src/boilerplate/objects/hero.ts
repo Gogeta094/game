@@ -1,32 +1,15 @@
 import { GameScene } from "../scenes/game";
 import { Checkpoint } from "./checkpoint";
 import { SelectedHeroOverlay } from "./selectedHeroOverlay";
+import { Creature } from "./creature";
 
-export class Hero extends Phaser.GameObjects.Sprite {
-    private _hp: number;
-    private _damage: number;
-    private _scene: GameScene;
-    private _selectionOverlay: SelectedHeroOverlay;
-
-    public currentCheckpoint: Checkpoint;
+export class Hero extends Creature {    
+    private _selectionOverlay: SelectedHeroOverlay;  
     public isSelected: boolean = false;
-
-    get hp():number {
-        return this._hp;
-    }
-
-    get damage(): number {
-        return this._damage;
-    }
 
     constructor (scene : GameScene, startingCheckpoint: Checkpoint, hp: number, dmg: number)
     {
-        super(scene, startingCheckpoint.x, startingCheckpoint.y, null, null);
-        this._scene = scene;
-        this._hp = hp;
-        this._damage = dmg;
-
-        this.currentCheckpoint = startingCheckpoint;
+        super(scene, startingCheckpoint, hp, dmg);
 
         this.setTexture('hero');
         this.setScale(0.1);
@@ -37,8 +20,8 @@ export class Hero extends Phaser.GameObjects.Sprite {
     }
 
     public MoveTo(checkpoint: Checkpoint): void{
-        this.currentCheckpoint = checkpoint;
-        this.setPosition(this.currentCheckpoint.x, this.currentCheckpoint.y);
+        this.checkpoint = checkpoint;
+        this.setPosition(this.checkpoint.x, this.checkpoint.y);
         this._selectionOverlay.updatePosition();
     }
 
