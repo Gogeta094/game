@@ -13,9 +13,8 @@ export class Creature extends Phaser.GameObjects.Sprite {
 
     get isAlive(): boolean {
         return this._hp > 0;
-    }  
-
-    constructor (scene : GameScene, public checkpoint: Checkpoint, private _hp: number, private _dmg: number)
+    } 
+    constructor (scene : GameScene, public checkpoint: Checkpoint, protected _hp: number, protected _dmg: number)
     {
         super(scene, checkpoint.x, checkpoint.y, null, null);
         checkpoint.placeCreature(this);

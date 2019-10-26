@@ -7,6 +7,9 @@ import { Creature } from "../objects/creature";
 
 export class GameScene extends Phaser.Scene
 {   
+    private _sideMenu: SideMenu;
+    private _player: Player;
+
     constructor() {
         super({key: "GameScene"});        
     }
@@ -19,12 +22,12 @@ export class GameScene extends Phaser.Scene
     }
 
     create() {
-        let sideMenu = new SideMenu(this);
+        this._sideMenu = new SideMenu(this);
         let map = Map.GenerateTestMap(this);      
-        var player = new Player(this);       
+        this._player = new Player(this);       
 
         var hero = new Hero(this, map.Checkpoints[0], 100, 10);
-        player.addHero(hero);
+        this._player.addHero(hero);
 
         let monster = new Monster(this, map.Checkpoints[1], 50, 10);
 
@@ -32,23 +35,31 @@ export class GameScene extends Phaser.Scene
         map.Checkpoints.forEach(checkpoint => {
             checkpoint.setInteractive()
                 .on('pointerdown', function(pointer, localX, localY, event){
-                    let selectedHero = player.getSelectedHero();
+                    let selectedHero = this._player.getSelectedHero();
                     if (selectedHero && map.HasPath(hero.checkpoint, checkpoint)){
                         selectedHero.MoveTo(checkpoint);
 
-                        if (checkpoint.hasCreature && !player.isAlliedCreature(checkpoint.creature)) {
+                        if (checkpoint.hasCreature && !this._player.isAlliedCreature(checkpoint.creature)) {
                             // fight
-                            self.fight(selectedHero, checkpoint.creature);                            
+                            self.fight(selectedHero, checkpoint.creature);      
+                            
+                            if (!checkpoint.creature.isAlive) {
+                                checkpoint.creature.destroy();
+                            }
+
+                            if (!selectedHero.isAlive){
+                                selectedHero.ressurect();
+                            }
                         }
                     }
             });
         });
 
-        player.Heroes.forEach(h => {
+        this._player.Heroes.forEach(h => {
             h.setInteractive()
             .on('pointerdown', function(pointer, localX, localY, event){
-                player.selectHero(h);
-                sideMenu.displaySelectedHeroCard(h);
+                this._player.selectHero(h);
+                self._sideMenu.displaySelectedHeroCard(h);
             });
         });
     }
@@ -59,5 +70,9 @@ export class GameScene extends Phaser.Scene
             enemy.attack(hero);
             console.log(`Hero hp - ${hero.hp}. Enemy hp - ${enemy.hp}`);
         }
+    }
+
+    public update() {
+        this._sideMenu.updateSelectedHeroCardInfo();
     }
 }
